@@ -5,7 +5,8 @@ import 'package:netflix_clone/core/constants.dart';
 import 'package:netflix_clone/presentation/search/widget/search_idle.dart';
 import 'package:netflix_clone/presentation/search/widget/search_result.dart';
 
-import '../../application/bloc/search_bloc.dart';
+
+import '../../application/search/search_bloc.dart';
 
 
 
