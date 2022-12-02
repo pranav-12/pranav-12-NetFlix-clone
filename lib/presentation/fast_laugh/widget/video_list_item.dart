@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:netflix_clone/application/fast_laugh/fast_laugh_bloc.dart';
 import 'package:netflix_clone/core/colors/colors.dart';
 import 'package:netflix_clone/core/constants.dart';
@@ -77,11 +78,41 @@ class VideoListItem extends StatelessWidget {
                             : NetworkImage('$imageAppendUrl$posterPath'),
                       ),
                     ),
-                    const VideoActionsWidget(
-                        icon: Icons.emoji_emotions, title: 'LOL'),
+                    ValueListenableBuilder(
+                      valueListenable: likedVideosIdsNotifier,
+                      builder: (BuildContext context, Set<int> newLikedList,
+                          Widget? _) {
+                        if (newLikedList.contains(index)) {
+                          return GestureDetector(
+                            onTap: () {
+                              // context.read<FastLaughBloc>().add(
+                              //       unLikeVideo(id: index),
+                              //     );
+                              likedVideosIdsNotifier.value.remove(index);
+                              likedVideosIdsNotifier.notifyListeners();
+                            },
+                            child: const VideoActionsWidget(
+                                icon: Icons.favorite, title: 'Liked'),
+                          );
+                        }
+
+                        return GestureDetector(
+                          onTap: () {
+                            // context.read<FastLaughBloc>().add(
+                            //       likeVideo(id: index),
+                            //     );
+                            likedVideosIdsNotifier.value.add(index);
+                            likedVideosIdsNotifier.notifyListeners();
+                          },
+                          child: const VideoActionsWidget(
+                              icon: Icons.emoji_emotions, title: 'LOL'),
+                        );
+                      },
+                    ),
                     const VideoActionsWidget(icon: Icons.add, title: 'My List'),
                     GestureDetector(
-                        onTap: () {print('pressed');
+                        onTap: () {
+                          print('pressed');
                           final movieName =
                               VideoListItemInheritedWidget.of(context)
                                   ?.movieData

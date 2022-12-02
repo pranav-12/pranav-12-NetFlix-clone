@@ -1,4 +1,3 @@
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
@@ -71,7 +70,6 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
               isError: true);
         },
         (SearchResponseModel r) {
-          
           return SearchState(
               searchResultLis: r.results!,
               idleList: [],

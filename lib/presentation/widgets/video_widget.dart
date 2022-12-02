@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:netflix_clone/core/constants.dart';
-import 'package:netflix_clone/presentation/search/widget/search_result.dart';
 
 import '../../core/colors/colors.dart';
-import '../search/widget/search_idle.dart';
 
 class VideoWidget extends StatelessWidget {
+  final String imageUrl;
   const VideoWidget({
     Key? key,
+    required this.imageUrl,
   }) : super(key: key);
 
   @override
@@ -18,8 +17,27 @@ class VideoWidget extends StatelessWidget {
           width: double.infinity,
           height: 200,
           child: Image.network(
-            kMainImage,
-            fit: BoxFit.cover,
+            imageUrl,
+            loadingBuilder:
+                (BuildContext _, Widget child, ImageChunkEvent? progress) {
+              if (progress == null) {
+                return child;
+              } else {
+                return const Center(
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                  ),
+                );
+              }
+            },
+            fit: BoxFit.fill,
+            errorBuilder: (BuildContext _, Object a, StackTrace? trace) {
+              return const Center(
+                  child: Icon(
+                Icons.wifi,
+                color: Colors.white,
+              ));
+            },
           ),
         ),
         Positioned(

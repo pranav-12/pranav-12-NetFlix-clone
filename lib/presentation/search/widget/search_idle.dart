@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:netflix_clone/presentation/search/widget/title.dart';
 
-
 import '../../../application/search/search_bloc.dart';
 import '../../../core/colors/colors.dart';
 import '../../../core/constants.dart';

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:netflix_clone/application/home/home_bloc.dart';
+
 import 'package:netflix_clone/core/constants.dart';
 import 'package:netflix_clone/presentation/home/widgets/background_card.dart';
 import 'package:netflix_clone/presentation/home/widgets/number_card.dart';
@@ -15,6 +18,9 @@ class ScreenHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<HomeBloc>().add(const GetHomeScreenData());
+    });
     return Scaffold(
       body: ValueListenableBuilder(
         valueListenable: scrollNotifier,
@@ -30,15 +36,68 @@ class ScreenHome extends StatelessWidget {
             return true;
           },
           child: Stack(children: [
-            ListView(
-              children: const [
-                BackgroundCard(),
-                MainTitleCard(title: 'Released in the past year'),
-                MainTitleCard(title: 'Trending Now'),
-                NumberCard(),
-                MainTitleCard(title: 'Tense Dramas'),
-                MainTitleCard(title: 'South Indian Cinema'),
-              ],
+            BlocBuilder<HomeBloc, HomeState>(
+              builder: (context, state) {
+                if (state.isLoading) {
+                  return const Center(
+                    child: CircularProgressIndicator(strokeWidth: 2),
+                  );
+                } else if (state.isError) {
+                  return const Center(
+                      child: Text(
+                    'Error while loading coming soon List',
+                    style: TextStyle(color: Colors.white),
+                  ));
+                }
+// released past year
+                final _releasePastYear = state.pastYearMovieList.map((m) {
+                  return '$imageAppendUrl${m.posterPath}';
+                }).toList();
+
+// trending
+                final _trending = state.trendingMovieList.map((m) {
+                  return '$imageAppendUrl${m.posterPath}';
+                }).toList();
+
+// tense dramas
+                final _tenseDramas = state.tenseDramasMovieLis.map((m) {
+                  return '$imageAppendUrl${m.posterPath}';
+                }).toList();
+
+// south Indian Cinema
+                final _southIndianCinema = state.southIndianMovieList.map((m) {
+                  return '$imageAppendUrl${m.posterPath}';
+                }).toList();
+                // south Indian Cinema
+                final _trendingTVList = state.trendingTVList.map((m) {
+                  return '$imageAppendUrl${m.posterPath}';
+                }).toList();
+
+                _releasePastYear.shuffle();
+                _southIndianCinema.shuffle();
+                _tenseDramas.shuffle();
+                _trending.shuffle();
+                _trendingTVList.shuffle();
+
+                return ListView(
+                  children: [
+                    const BackgroundCard(),
+                    MainTitleCard(
+                        title: 'Released in the past year',
+                        posterList: _releasePastYear.sublist(0, 10)),
+                    MainTitleCard(
+                        title: 'Trending Now',
+                        posterList: _trending.sublist(0, 10)),
+                    NumberCard(postersList: _trendingTVList.sublist(0, 10)),
+                    MainTitleCard(
+                        title: 'Tense Dramas',
+                        posterList: _tenseDramas.sublist(0, 10)),
+                    MainTitleCard(
+                        title: 'South Indian Cinema',
+                        posterList: _southIndianCinema.sublist(0, 10)),
+                  ],
+                );
+              },
             ),
             scrollNotifier.value == true
                 ? AnimatedContainer(

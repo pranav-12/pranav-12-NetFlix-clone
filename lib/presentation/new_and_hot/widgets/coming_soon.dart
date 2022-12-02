@@ -1,15 +1,27 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+
 import 'package:netflix_clone/presentation/widgets/video_widget.dart';
 
 import '../../../core/colors/colors.dart';
 import '../../../core/constants.dart';
 import '../../home/widgets/custom_button_widgets.dart';
-import '../../search/widget/search_idle.dart';
 
 class ComingSoonWidget extends StatelessWidget {
+  final String id;
+  final String month;
+  final String day;
+  final String posterPath;
+  final String movieName;
+  final String description;
+
   const ComingSoonWidget({
     Key? key,
+    required this.id,
+    required this.month,
+    required this.day,
+    required this.posterPath,
+    required this.movieName,
+    required this.description,
   }) : super(key: key);
 
   @override
@@ -22,14 +34,15 @@ class ComingSoonWidget extends StatelessWidget {
           height: 450,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
-            children: const [
+            children: [
               Text(
-                'FEB',
-                style: TextStyle(color: kGreyColor, fontSize: 16),
+                month,
+                style: const TextStyle(color: kGreyColor, fontSize: 16),
               ),
               Text(
-                '11',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                day,
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
               ),
             ],
           ),
@@ -40,53 +53,53 @@ class ComingSoonWidget extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const VideoWidget(),
+              VideoWidget(imageUrl: posterPath),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
-                    'Tall Girl 2',
-                    style: TextStyle(
-                      letterSpacing: -5,
-                      fontSize: 40,
-                      fontWeight: FontWeight.bold,
+                  Expanded(
+                    child: Text(
+                      movieName,
+                      maxLines: 1,
+                      overflow: TextOverflow.clip,
+                      style: const TextStyle(
+                        fontSize: 40,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
-                  const Spacer(),
-                  Row(
-                    children: [
-                      ColumTextButton(
-                        icon: CupertinoIcons.bell,
-                        title: "Remind me",
-                        iconsize: 20,
-                        textize: 12,
-                      ),
-                      kwidth,
-                      ColumTextButton(
-                        icon: CupertinoIcons.info,
-                        title: "Info",
-                        iconsize: 20,
-                        textize: 12,
-                      ),
-                      kwidth,
-                    ],
+                  ColumTextButton(
+                    icon: CupertinoIcons.bell,
+                    title: "Remind me",
+                    iconsize: 20,
+                    textize: 12,
                   ),
+                  kwidth,
+                  ColumTextButton(
+                    icon: CupertinoIcons.info,
+                    title: "Info",
+                    iconsize: 20,
+                    textize: 12,
+                  ),
+                  kwidth,
                 ],
               ),
-              const Text('Coming on Friday'),
+              Text('Coming on $day $month'),
               kheight,
-              const Text(
-                'Tall Girl 2',
-                style: TextStyle(
+              Text(
+                movieName,
+                style: const TextStyle(
                   color: kwhiteColor,
                   fontSize: 18,
                   fontWeight: FontWeight.w900,
                 ),
               ),
               kheight,
-              const Text(
-                "Landing the lead in the school musical is a dream come true for jodi, until the pressure sends her confidence--and her relationship--into a tallspin",
-                style: TextStyle(
+              Text(
+                description,
+                maxLines: 4,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
                     color: kGreyColor,
                     // fontSize: 10,
                     fontWeight: FontWeight.bold),

@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:netflix_clone/core/colors/colors.dart';
 
 import '../../../core/constants.dart';
-import '../../search/widget/search_result.dart';
 
 class NumberCard extends StatelessWidget {
-  const NumberCard({super.key});
+  final List<String> postersList;
+  const NumberCard({super.key, required this.postersList});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class NumberCard extends StatelessWidget {
           child: ListView(
             scrollDirection: Axis.horizontal,
             children: List.generate(
-              10,
+              postersList.length,
               (index) => Stack(
                 children: [
                   Row(
@@ -39,7 +39,7 @@ class NumberCard extends StatelessWidget {
                           borderRadius: kRadius10,
                           image:  DecorationImage(
                             fit: BoxFit.cover,
-                            image: NetworkImage(kMainImage),
+                            image: NetworkImage(postersList[index]),
                           ),
                         ),
                       ),

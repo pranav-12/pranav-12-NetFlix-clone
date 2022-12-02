@@ -10,6 +10,9 @@ import 'package:netflix_clone/presentation/main_page/screen_mainpage.dart';
 
 import 'application/fast_laugh/fast_laugh_bloc.dart';
 
+import 'application/home/home_bloc.dart';
+import 'application/hot_and_new/hot_and_new_bloc.dart';
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await configureInjection();
@@ -23,15 +26,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(
-          create: (context) => getIt<DownloadsBloc>(),
-        ),
-        BlocProvider(
-          create: (context) => getIt<SearchBloc>(),
-        ),
-        BlocProvider(
-          create: (context) => getIt<FastLaughBloc>(),
-        )
+        BlocProvider(create: (context) => getIt<DownloadsBloc>()),
+        BlocProvider(create: (context) => getIt<SearchBloc>()),
+        BlocProvider(create: (context) => getIt<FastLaughBloc>()),
+        BlocProvider(create: (context) => getIt<HotAndNewBloc>()),
+        BlocProvider(create: (context) => getIt<HomeBloc>())
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

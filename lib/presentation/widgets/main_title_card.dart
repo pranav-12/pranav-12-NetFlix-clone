@@ -6,10 +6,11 @@ import '../search/widget/search_result.dart';
 class MainTitleCard extends StatelessWidget {
   const MainTitleCard({
     Key? key,
-    required this.title,
+    required this.title, required this.posterList,
   }) : super(key: key);
 
   final String title;
+  final List<String> posterList;
 
   @override
   Widget build(BuildContext context) {
@@ -28,15 +29,15 @@ class MainTitleCard extends StatelessWidget {
           child: ListView(
             scrollDirection: Axis.horizontal,
             children: List.generate(
-              10,
+              posterList.length,
               (index) => Container(
-                margin: EdgeInsets.symmetric(horizontal: 10),
+                margin: const EdgeInsets.symmetric(horizontal: 10),
                 width: 130,
                 decoration: BoxDecoration(
                   borderRadius: kRadius10,
                   image:  DecorationImage(
                     fit: BoxFit.cover,
-                    image: NetworkImage(kMainImage),
+                    image: NetworkImage(posterList[index]),
                   ),
                 ),
               ),

@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:netflix_clone/domain/core/api_end_points.dart';
@@ -20,10 +18,6 @@ class DownloadsRepository implements IDownloadsRepo {
           print(response.data);
           return Downloads.fromJson(e as Map<String, dynamic>);
         }).toList();
-        // final List<Downloads> downloadsList = [];
-        // for (final raw in response.data) {
-        //   downloadsList.add(Downloads.fromJson(raw as Map<String, dynamic>));
-        // }
         print(downloadsList);
         return Right(downloadsList);
       } else {

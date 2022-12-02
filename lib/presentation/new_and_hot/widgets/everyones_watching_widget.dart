@@ -6,8 +6,15 @@ import '../../home/widgets/custom_button_widgets.dart';
 import '../../widgets/video_widget.dart';
 
 class EveryonesWatchingWidgets extends StatelessWidget {
+  final String posterPath;
+  final String movieName;
+  final String description;
+
   const EveryonesWatchingWidgets({
     Key? key,
+    required this.posterPath,
+    required this.movieName,
+    required this.description,
   }) : super(key: key);
 
   @override
@@ -16,7 +23,7 @@ class EveryonesWatchingWidgets extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         kheight,
-        const VideoWidget(),
+        VideoWidget(imageUrl: posterPath),
         kheight,
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
@@ -44,18 +51,20 @@ class EveryonesWatchingWidgets extends StatelessWidget {
             kwidth,
           ],
         ),
-        const Text(
-          'Tall Girl 2',
-          style: TextStyle(
+        Text(
+          movieName,
+          style: const TextStyle(
             color: kwhiteColor,
             fontSize: 20,
             fontWeight: FontWeight.bold,
           ),
         ),
         kheight,
-        const Text(
-          "Landing the lead in the school musical is a dream come true for jodi, until the pressure sends her confidence--and her relationship--into a tallspin",
-          style: TextStyle(
+        Text(
+          description,
+          maxLines: 4,
+          overflow: TextOverflow.ellipsis,
+          style: const TextStyle(
               color: kGreyColor,
               // fontSize: 10,
               fontWeight: FontWeight.bold),
